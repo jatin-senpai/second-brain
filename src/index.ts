@@ -59,12 +59,21 @@ app.post("/api/v1/content",usermiddleware,async (req,res)=>{
         message:"Content added"
     })
 })
-app.get("/api/v1/content",usermiddleware,(req,res)=>{
+app.get("/api/v1/content",usermiddleware,async (req,res)=>{
+    //@ts-ignore
+    const us = req.userId
+    const mat=await Content.find({UserId:us}).populate("UserId","username")
+    res.status(200).json(mat)
 
 })
 
-app.delete("/api/v1/content",usermiddleware,(req,res)=>{
-
+app.delete("/api/v1/content",usermiddleware,async (req,res)=>{
+    //@ts-ignore
+    const delete_id = req.userId
+    const del = await Content.deleteMany({Content,UserId:delete_id})
+    res.status(200).json({
+        message:"Deleted"
+    })
 })
 app.post("api/v1/brain/share",usermiddleware,(req,res)=>{
 

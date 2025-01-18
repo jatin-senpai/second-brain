@@ -65,10 +65,20 @@ app.post("/api/v1/content", middleware_1.usermiddleware, (req, res) => __awaiter
         message: "Content added"
     });
 }));
-app.get("/api/v1/content", middleware_1.usermiddleware, (req, res) => {
-});
-app.delete("/api/v1/content", middleware_1.usermiddleware, (req, res) => {
-});
+app.get("/api/v1/content", middleware_1.usermiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //@ts-ignore
+    const us = req.userId;
+    const mat = yield db_1.Content.find({ UserId: us }).populate("UserId", "username");
+    res.status(200).json(mat);
+}));
+app.delete("/api/v1/content", middleware_1.usermiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //@ts-ignore
+    const delete_id = req.userId;
+    const del = yield db_1.Content.deleteMany({ Content: db_1.Content, UserId: delete_id });
+    res.status(200).json({
+        message: "Deleted"
+    });
+}));
 app.post("api/v1/brain/share", middleware_1.usermiddleware, (req, res) => {
 });
 app.listen(3000, () => {
