@@ -25,7 +25,10 @@ const Linkmodel = new Schema({
     UserId: {
         type: mongoose.Types.ObjectId,
         ref: "user",
-        required: true
+        required: true,
+        unique:true
     }
+    
 })
 export const Link = mongoose.model("link",Linkmodel)
+
